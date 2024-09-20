@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FileDataWriter implements DataSender {
     public void sendData(List<String> lines, String filename) throws IOException {
+        System.out.println("Using FileDataWriter");
         PrintWriter writer = new PrintWriter(new FileWriter(new File(filename)));
         for (String s : lines) {
             writer.write(s + "\n");

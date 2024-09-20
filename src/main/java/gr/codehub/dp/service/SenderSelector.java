@@ -8,7 +8,7 @@ public class SenderSelector {
         if (mustSaveFile()) {
             return new FileDataWriter();
         } else {
-            return null;
+            return new ScreenWriter();
         }
     }
 
