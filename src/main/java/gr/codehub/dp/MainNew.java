@@ -1,15 +1,14 @@
 package gr.codehub.dp;
 
-import java.io.BufferedReader;
-import java.io.File;
+import gr.codehub.dp.interfaces.DataChecker;
+import gr.codehub.dp.interfaces.DataSender;
+import gr.codehub.dp.service.CheckerSelector;
+import gr.codehub.dp.service.FileDataReader;
+import gr.codehub.dp.service.SenderSelector;
+import gr.codehub.dp.service.UpperCaseConverter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainNew {
 
@@ -39,9 +38,8 @@ public class MainNew {
     }
 
     private static List<String> convertData(List<String> lines) {
-        return lines.stream()
-                .map(String::toUpperCase)
-                .collect(Collectors.toList());
+        List<String> newLines = UpperCaseConverter.convertData(lines);
+        return newLines;
     }
 
     private static void handleError() {
@@ -50,30 +48,18 @@ public class MainNew {
     }
 
     private static boolean checkData(List<String> lines) {
-        final String firstOriginal = lines.get(0);
-        final String firstLower = firstOriginal.toLowerCase();
-        return firstLower.contains("e")
-                || firstLower.contains("t")
-                || firstLower.contains("a")
-                || firstLower.contains("o");
+        DataChecker checker = CheckerSelector.select();
+        boolean ok = checker.checkData(lines);
+        return ok;
     }
 
     private static void sendData(List<String> lines, String filename) throws IOException {
-        PrintWriter writer = new PrintWriter(new FileWriter(new File(filename)));
-        for (String s : lines) {
-            writer.write(s + "\n");
-        }
-        writer.close();
+        DataSender sender = SenderSelector.select();
+        sender.sendData(lines, filename);
     }
 
     private static List<String> receiveData(String filename) throws IOException, FileNotFoundException {
-        BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-        reader.close();
+        List<String> lines = FileDataReader.receiveData(filename);
         return lines;
     }
 }
