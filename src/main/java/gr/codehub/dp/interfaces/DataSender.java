@@ -5,5 +5,12 @@ import java.util.List;
 
 public interface DataSender {
 
-    void sendData(List<String> lines, String filename) throws IOException;
+    void setLines(List<String> lines);
+
+    void setFilename(String filename);
+
+    void sendData() throws IOException;
+
+    public List<String> getLines();
+
 }

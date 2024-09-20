@@ -55,7 +55,10 @@ public class MainNew {
 
     private static void sendData(List<String> lines, String filename) throws IOException {
         DataSender sender = SenderSelector.select();
-        sender.sendData(lines, filename);
+        sender.setFilename(filename);
+        sender.setLines(lines);
+        sender.sendData(); // execute
+        System.out.println(sender.getLines()); // review
     }
 
     private static List<String> receiveData(String filename) throws IOException, FileNotFoundException {
