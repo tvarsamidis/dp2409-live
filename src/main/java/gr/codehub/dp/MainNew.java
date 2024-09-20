@@ -4,7 +4,7 @@ import gr.codehub.dp.interfaces.DataChecker;
 import gr.codehub.dp.interfaces.DataSender;
 import gr.codehub.dp.service.CheckerSelector;
 import gr.codehub.dp.service.FileDataReader;
-import gr.codehub.dp.service.SenderSelector;
+import gr.codehub.dp.service.ScreenWriterBuilder;
 import gr.codehub.dp.service.UpperCaseConverter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,11 +54,15 @@ public class MainNew {
     }
 
     private static void sendData(List<String> lines, String filename) throws IOException {
-        DataSender sender = SenderSelector.select();
-        sender.setFilename(filename);
-        sender.setLines(lines);
+        DataSender sender = new ScreenWriterBuilder()
+                .lines(lines)
+                .filename(filename)
+                .lines(lines)
+                .lines(lines)
+                .lines(lines)
+                .build();
         sender.sendData(); // execute
-        System.out.println(sender.getLines()); // review
+//        System.out.println(sender.getLines()); // review
     }
 
     private static List<String> receiveData(String filename) throws IOException, FileNotFoundException {

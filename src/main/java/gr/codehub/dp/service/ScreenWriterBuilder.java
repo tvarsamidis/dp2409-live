@@ -8,7 +8,7 @@ public class ScreenWriterBuilder {
     private String filename = "*** FILENAME MISSING ****";
     
     public ScreenWriterBuilder lines(List<String> lines){
-        this.lines = lines;
+        this.lines.addAll(lines);
         return this;
     }
 
