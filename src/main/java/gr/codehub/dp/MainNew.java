@@ -30,26 +30,26 @@ public class MainNew {
     }
 
     private static void doProcessing() throws IOException {
-        List<String> lines = readFile(ROOT + "input.txt");
-        if (!isEnglish(lines)) {
-            handleIncorrectLanguage();
+        List<String> lines = receiveData(ROOT + "input.txt");
+        if (!checkData(lines)) {
+            handleError();
         }
-        List<String> linesUpper = toUpper(lines);
-        writeFile(linesUpper, ROOT + "output.txt");
+        List<String> linesUpper = convertData(lines);
+        sendData(linesUpper, ROOT + "output.txt");
     }
 
-    private static List<String> toUpper(List<String> lines) {
+    private static List<String> convertData(List<String> lines) {
         return lines.stream()
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
     }
 
-    private static void handleIncorrectLanguage() {
+    private static void handleError() {
         System.out.println("No english text, no processing done");
         System.exit(1);
     }
 
-    private static boolean isEnglish(List<String> lines) {
+    private static boolean checkData(List<String> lines) {
         final String firstOriginal = lines.get(0);
         final String firstLower = firstOriginal.toLowerCase();
         return firstLower.contains("e")
@@ -58,7 +58,7 @@ public class MainNew {
                 || firstLower.contains("o");
     }
 
-    private static void writeFile(List<String> lines, String filename) throws IOException {
+    private static void sendData(List<String> lines, String filename) throws IOException {
         PrintWriter writer = new PrintWriter(new FileWriter(new File(filename)));
         for (String s : lines) {
             writer.write(s + "\n");
@@ -66,7 +66,7 @@ public class MainNew {
         writer.close();
     }
 
-    private static List<String> readFile(String filename) throws IOException, FileNotFoundException {
+    private static List<String> receiveData(String filename) throws IOException, FileNotFoundException {
         BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
         List<String> lines = new ArrayList<>();
         String line;
