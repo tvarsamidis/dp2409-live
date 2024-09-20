@@ -1,0 +1,10 @@
+this is a sample text.
+
+it was written in september 2024.
+
+The author is very proud of it.
+
+here is the alphabet in lower case letters: abcdefghijklmnopqrstuvwxyz
+here is the alphabet in upper case letters: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+they all look absolutely correct.
